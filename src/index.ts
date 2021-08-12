@@ -1,21 +1,22 @@
-import {Observable} from 'rxjs';
+import {Observable,interval} from 'rxjs';
 
-const observable = new Observable((dat)=>{
-    dat.next(1);
-    dat.next(2);
-    dat.next(3);
-    setTimeout(()=>{
-        dat.next(4);
-        dat.complete();
-    },1000);
+const observable = interval(100);
+const observable2 = new Observable((sub)=>{
+        sub.next("Hi 1");
+        sub.next(2);
+        sub.next(3);
+        sub.next(4);
+        setTimeout(()=>{
+            sub.next("The end 6");
+        },1000)
 });
 
-console.log('just before subscribe');
+const subscription1 = observable.subscribe(x=> console.log(x));
+const subscription2 =observable2.subscribe(x => console.log(x));
 
-observable.subscribe({
-    next(x){console.log('got value ' + x); },
-    error(err) { console.error('something wrong occurred: ' + err); },
-    complete() { console.log('done');}
-});
+subscription1.add(subscription2);
 
+setTimeout(()=>{
+    subscription1.unsubscribe();
+},5000)
 
