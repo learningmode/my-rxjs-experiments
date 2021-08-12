@@ -1,0 +1,11 @@
+# Installed libs
+node_modules/
+
+# Generated
+/dist/
+
+# Misc
+npm-debug.log
+.DS_STORE
+*.tgz
+.eslintcache
