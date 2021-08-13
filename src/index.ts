@@ -1,22 +1,14 @@
-import {Observable,interval} from 'rxjs';
+import {from, Subject} from 'rxjs';
 
-const observable = interval(100);
-const observable2 = new Observable((sub)=>{
-        sub.next("Hi 1");
-        sub.next(2);
-        sub.next(3);
-        sub.next(4);
-        setTimeout(()=>{
-            sub.next("The end 6");
-        },1000)
+const sub = new Subject<number>();
+
+sub.subscribe({
+    next:(x)=>{return console.log(`Observer A:${x}`)}
 });
 
-const subscription1 = observable.subscribe(x=> console.log(x));
-const subscription2 =observable2.subscribe(x => console.log(x));
+sub.subscribe({
+    next:(y)=>{return console.log(`Observer B: ${y}`)}
+});
 
-subscription1.add(subscription2);
-
-setTimeout(()=>{
-    subscription1.unsubscribe();
-},5000)
-
+const observable = from([1,2,3,4,5]);
+observable.subscribe(sub);
