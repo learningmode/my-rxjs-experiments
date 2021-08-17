@@ -7,14 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body { font-family: 'Arial'; background: lightgray}
-        ul { list-style-type: none; padding: 20px; }
-        li { padding: 15px; background: lightcoral; margin-bottom: 10px; }
+        #indication{
+            position: fixed;
+            background-color: #ff3366;
+            width:5px;
+            height: 23px;
+            top:0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
-    <h1>RxJS Demo</h1>
-    <div>
-        <ul id="list"></ul>
+    <div style="position:relative;  height: 3000px;">
+        <div id="indication">&nbsp;</div>
+        Scroll Down!!!
+
+        <div style="position:absolute; bottom:0;">Boom! Your at the Bottom</div>
     </div>
     <script src="/bundle.js"></script>
 </body>

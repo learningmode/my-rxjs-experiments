@@ -1,14 +1,18 @@
-import {from, Subject} from 'rxjs';
+import { fromEvent } from "rxjs";
+import { throttleTime,tap } from "rxjs";
 
-const sub = new Subject<number>();
+const scrollPosition = document.getElementById('indication')
 
-sub.subscribe({
-    next:(x)=>{return console.log(`Observer A:${x}`)}
-});
+const getScrollWidth = () =>{
+    const rootElem = document.documentElement;
+    const winScroll = rootElem.scrollTop;
+    const height = rootElem.scrollHeight - rootElem.clientHeight;
 
-sub.subscribe({
-    next:(y)=>{return console.log(`Observer B: ${y}`)}
-});
+    return (winScroll/height)*100;
+} 
 
-const observable = from([1,2,3,4,5]);
-observable.subscribe(sub);
+const setScroller = ()=>{
+    return scrollPosition.style.width = getScrollWidth()+'%'
+}
+
+fromEvent(document,'scroll').pipe(throttleTime(20),tap(setScroller)).subscribe();
